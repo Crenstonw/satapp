@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 @SuperBuilder
 @Getter
 @Setter
+@Entity
 public class User implements UserDetails {
 
     @Id
