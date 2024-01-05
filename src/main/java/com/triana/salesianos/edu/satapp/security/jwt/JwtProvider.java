@@ -1,6 +1,6 @@
 package com.triana.salesianos.edu.satapp.security.jwt;
-import com.salesianos.triana.VaxConnectApi.user.modal.User;
 import com.triana.salesianos.edu.satapp.security.errorhandling.JwtTokenException;
+import com.triana.salesianos.edu.satapp.user.modal.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.security.Keys;

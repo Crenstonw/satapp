@@ -1,6 +1,8 @@
 package com.triana.salesianos.edu.satapp.security.jwt;
 
 import com.triana.salesianos.edu.satapp.security.errorhandling.JwtTokenException;
+import com.triana.salesianos.edu.satapp.user.modal.User;
+import com.triana.salesianos.edu.satapp.user.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,19 +27,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private final PatientService patientService;
-
-    @Autowired
-    private final SanitaryService sanitaryService;
-
-    @Autowired
+    private final UserService userService;
     private final JwtProvider jwtProvider;
 
     @Autowired
     @Qualifier("handlerExceptionResolver")
     private HandlerExceptionResolver resolver;
-
 
 
 
@@ -50,40 +45,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
                 UUID userId = jwtProvider.getUserIdFromJwtToken(token);
 
-                Optional<Patient> result = patientService.findById(userId);
-
+                Optional<User> result = userService.findById(userId);
 
                 if (result.isPresent()) {
-                    Patient patient = result.get();
+                    User user = result.get();
 
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
-                                    patient,
+                                    user,
                                     null,
-                                    patient.getAuthorities()
+                                    user.getAuthorities()
                             );
 
                     authentication.setDetails(new WebAuthenticationDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-                }else{
-                    Optional<Sanitary> resultSanitary = sanitaryService.findById(userId);
-
-                    if(resultSanitary.isPresent()){
-
-                        Sanitary sanitary = resultSanitary.get();
-                        UsernamePasswordAuthenticationToken authentication =
-                                new UsernamePasswordAuthenticationToken(
-                                        sanitary,
-                                        null,
-                                        sanitary.getAuthorities()
-                                );
-
-                        authentication.setDetails(new WebAuthenticationDetails(request));
-
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                    }
                 }
 
             }
@@ -94,8 +70,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.info("Authentication error using token JWT: " + ex.getMessage());
             resolver.resolveException(request, response, null, ex);
         }
-    }
 
+
+
+    }
 
     private String getJwtTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(JwtProvider.TOKEN_HEADER);

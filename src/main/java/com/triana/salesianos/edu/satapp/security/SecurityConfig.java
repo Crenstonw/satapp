@@ -40,7 +40,6 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception{
-        //If it works try to simplify,if else don't touch!!!
         AuthenticationManagerBuilder authenticationManagerBuilder= http.getSharedObject(AuthenticationManagerBuilder.class);
 
         AuthenticationManager authenticationManager = authenticationManagerBuilder.authenticationProvider(authenticationProvider()).build();
@@ -90,8 +89,6 @@ public class SecurityConfig {
                 .requestMatchers(
                         antMatcher("/h2-console/**"),
                         antMatcher("/auth/register"),
-                        antMatcher("/auth/register/sanitary"),//cambiar linea 95
-                        antMatcher("/auth/login/sanitary"),
                         antMatcher("/auth/login"),
                         antMatcher("/error")
                 ));

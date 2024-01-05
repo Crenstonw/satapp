@@ -25,8 +25,6 @@ public class Ticket {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-
-
     @Column(name = "title")
     private String title;
 
