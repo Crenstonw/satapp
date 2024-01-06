@@ -1,6 +1,7 @@
 package com.triana.salesianos.edu.satapp.user.service;
 
 import com.triana.salesianos.edu.satapp.user.dto.CreateUserRequest;
+import com.triana.salesianos.edu.satapp.user.dto.UserResponse;
 import com.triana.salesianos.edu.satapp.user.modal.User;
 import com.triana.salesianos.edu.satapp.user.modal.UserRole;
 import com.triana.salesianos.edu.satapp.user.repo.UserRepository;
@@ -44,8 +45,12 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Optional<User> findByEmail(String email) {
+    public Optional<UserResponse> findByEmail(String email) {
         return userRepository.findFirstByEmail(email);
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findFirstByUsername(username);
     }
 
     public void deleteById(UUID id) {
@@ -54,7 +59,7 @@ public class UserService {
     }
 
     public void validate(UUID id, User user) {
-        user.setAccountNonLocked(true);
+        user.setEnabled(true);
         userRepository.save(user);
     }
 }

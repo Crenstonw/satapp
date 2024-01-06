@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InventariableController {
 
-    private final InventariableService inventariableService;
+    //private final InventariableService inventariableService;
 
     @GetMapping("/inventariable")
     public ResponseEntity<Inventariable> getAllInventariable() {
