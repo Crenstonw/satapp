@@ -45,7 +45,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Optional<UserResponse> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findFirstByEmail(email);
     }
 

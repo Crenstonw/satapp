@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("""
             SELECT u FROM User u WHERE u.email = ?1
             """)
-    Optional<UserResponse> findFirstByEmail(String email);
+    Optional<User> findFirstByEmail(String email);
 
     Optional<User> findFirstByUsername(String username);
 
