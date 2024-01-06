@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@MappedSuperclass
+//@MappedSuperclass
 @SuperBuilder
 @Table(name = "inventariable_entity")
 public class Inventariable {

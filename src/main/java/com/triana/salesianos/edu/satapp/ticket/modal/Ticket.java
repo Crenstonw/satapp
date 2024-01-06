@@ -17,7 +17,7 @@ import java.util.UUID;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@MappedSuperclass
+//@MappedSuperclass
 @Table(name = "ticket_entity")
 public class Ticket {
 

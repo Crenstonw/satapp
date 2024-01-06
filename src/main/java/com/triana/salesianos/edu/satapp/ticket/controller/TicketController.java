@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TicketController {
 
-    private final TicketService ticketService;
+    //private final TicketService ticketService;
 
     @PostMapping("/ticket/new")
     public ResponseEntity<Ticket> newTicket() {
