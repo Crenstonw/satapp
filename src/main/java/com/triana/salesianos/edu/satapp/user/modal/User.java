@@ -36,13 +36,13 @@ public class User implements UserDetails {
     protected UUID id;
 
     @NaturalId
-    @Column(unique = true, updatable = false)
+    @Column(name = "email", unique = true, updatable = false)
     protected String email;
 
     @Column(name = "password")
     protected String password;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     protected String username;
 
     @Enumerated
@@ -50,9 +50,9 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     protected Set<UserRole> userRole;
 
-    /*@OneToMany(orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    protected Collection<Ticket> tickets = new ArrayList<>();*/
+    protected Collection<Ticket> tickets = new ArrayList<>();
 
     @Builder.Default
     protected LocalDateTime lastPasswordChangedAt = LocalDateTime.now();
@@ -64,13 +64,13 @@ public class User implements UserDetails {
     private boolean accountNonExpired = true;
 
     @Builder.Default
-    protected boolean accountNonLocked = false;
+    protected boolean accountNonLocked = true;
 
     @Builder.Default
     private boolean credentialsNonExpired = true;
 
     @Builder.Default
-    private boolean enabled = true;
+    private boolean enabled = false;
 
     @Override
     public String getUsername() {

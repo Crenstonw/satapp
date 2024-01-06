@@ -10,10 +10,15 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-    Optional<User> findFirstByEmail(String email);
-
     @Query("""
+            SELECT u FROM User u WHERE u.email = ?1
+            """)
+    Optional<UserResponse> findFirstByEmail(String email);
+
+    Optional<User> findFirstByUsername(String username);
+
+    /*@Query("""
             
             """)
-    Optional<UserResponse> findByNoValidated();
+    Optional<UserResponse> findByNoValidated();*/
 }
