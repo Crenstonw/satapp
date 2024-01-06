@@ -34,15 +34,6 @@ public class UserService {
         return createUser(createUserRequest, Set.of(UserRole.USER));
     }
 
-    public User createUserWithAdminRole(CreateUserRequest createUserRequest) {
-        return createUser(createUserRequest, Set.of(UserRole.ADMIN));
-    }
-
-    public List<User> findAll() {
-
-        return userRepository.findAll();
-    }
-
     public Optional<User> findById(UUID id) {
         return userRepository.findById(id);
     }
@@ -55,12 +46,7 @@ public class UserService {
         return userRepository.findFirstByUsername(username);
     }
 
-    public void deleteById(UUID id) {
-        if(userRepository.existsById(id))
-            userRepository.deleteById(id);
-    }
-
-    public void validate(UUID id, User user) {
+    public void validate(User user) {
         user.setEnabled(true);
         userRepository.save(user);
     }

@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -36,6 +34,6 @@ public class Inventariable {
 
     @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "inventariable_id")
-    private Set<Ticket> tickets = new LinkedHashSet<>();
+    private Set<Ticket> tickets = new HashSet<>();
 
 }

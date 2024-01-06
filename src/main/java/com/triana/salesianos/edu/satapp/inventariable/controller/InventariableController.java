@@ -1,7 +1,9 @@
 package com.triana.salesianos.edu.satapp.inventariable.controller;
 
+import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
 import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
 import com.triana.salesianos.edu.satapp.inventariable.service.InventariableService;
+import com.triana.salesianos.edu.satapp.user.exception.EmptyListException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +14,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InventariableController {
 
-    //private final InventariableService inventariableService;
+    private final InventariableService inventariableService;
 
     @GetMapping("/inventariable")
-    public ResponseEntity<Inventariable> getAllInventariable() {
-        return null;
+    public ResponseEntity<List<InventariableDto>> getAllInventariable() {
+        List<InventariableDto> result = inventariableService.getAllInventariable();
+        if(result.isEmpty())
+            throw new EmptyListException();
+        else
+            return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/inventariable/{id}")
