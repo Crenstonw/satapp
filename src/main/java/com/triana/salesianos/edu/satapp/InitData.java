@@ -1,6 +1,8 @@
 package com.triana.salesianos.edu.satapp;
 
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
+import com.triana.salesianos.edu.satapp.inventariable.repo.InventariableRepository;
 import com.triana.salesianos.edu.satapp.user.modal.User;
 import com.triana.salesianos.edu.satapp.user.modal.UserRole;
 import com.triana.salesianos.edu.satapp.user.repo.UserRepository;
@@ -18,6 +20,7 @@ public class InitData {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final InventariableRepository inventariableRepository;
 
     @PostConstruct
     public  void initData(){
@@ -30,5 +33,13 @@ public class InitData {
                 .enabled(true)
                 .build();
         userRepository.save(admin);
+
+        Inventariable mesa = Inventariable.builder()
+                .id(UUID.randomUUID())
+                .name("mesa")
+                .type("mueble")
+                .ubication("Sevilla")
+                .build();
+        inventariableRepository.save(mesa);
     }
 }
