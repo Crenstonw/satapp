@@ -65,8 +65,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Optional<UserNoValidatedRequest> findNonValidated() {
-        Optional<UserNoValidatedRequest> busqueda = userRepository.findAllNonValidated();
+    public List<UserNoValidatedRequest> findNonValidated() {
+        List<UserNoValidatedRequest> busqueda = userRepository.findAllNonValidated();
         return busqueda;
     }
 }

@@ -70,11 +70,11 @@ public class UserController {
     }
 
     @GetMapping("/users/no-validated")
-    public ResponseEntity<Optional<UserNoValidatedRequest>> noValidatedUserList() {
-        Optional<UserNoValidatedRequest> respuesta = userService.findNonValidated();
-        if(respuesta.isPresent())
-            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
-        else
+    public ResponseEntity<List<UserNoValidatedRequest>> noValidatedUserList() {
+        List<UserNoValidatedRequest> respuesta = userService.findNonValidated();
+        if(respuesta.isEmpty())
             throw new EmptyListException();
+        else
+            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
     }
 }
