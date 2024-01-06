@@ -1,10 +1,13 @@
 package com.triana.salesianos.edu.satapp.user.repo;
 
+import com.triana.salesianos.edu.satapp.user.dto.CreateUserRequest;
+import com.triana.salesianos.edu.satapp.user.dto.UserNoValidatedRequest;
 import com.triana.salesianos.edu.satapp.user.dto.UserResponse;
 import com.triana.salesianos.edu.satapp.user.modal.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,8 +20,15 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findFirstByUsername(String username);
 
-    /*@Query("""
-            
+    @Query("""
+            SELECT new com.triana.salesianos.edu.satapp.user.dto.UserNoValidatedRequest(
+            u.id,
+            u.username,
+            u.email, 
+            u.password
+            )
+            FROM User u 
+            WHERE u.enabled = FALSE
             """)
-    Optional<UserResponse> findByNoValidated();*/
+    List<UserNoValidatedRequest> findAllNonValidated();
 }
