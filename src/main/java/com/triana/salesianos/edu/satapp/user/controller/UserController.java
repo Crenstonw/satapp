@@ -2,6 +2,7 @@ package com.triana.salesianos.edu.satapp.user.controller;
 
 import com.triana.salesianos.edu.satapp.security.jwt.JwtProvider;
 import com.triana.salesianos.edu.satapp.user.dto.*;
+import com.triana.salesianos.edu.satapp.user.exception.EmptyListException;
 import com.triana.salesianos.edu.satapp.user.exception.UserNotFoundException;
 import com.triana.salesianos.edu.satapp.user.modal.User;
 import com.triana.salesianos.edu.satapp.user.service.UserService;
@@ -70,6 +71,10 @@ public class UserController {
 
     @GetMapping("/users/no-validated")
     public ResponseEntity<Optional<UserNoValidatedRequest>> noValidatedUserList() {
-        return null;
+        Optional<UserNoValidatedRequest> respuesta = userService.findNonValidated();
+        if(respuesta.isPresent())
+            return ResponseEntity.status(HttpStatus.OK).body(respuesta);
+        else
+            throw new EmptyListException();
     }
 }
