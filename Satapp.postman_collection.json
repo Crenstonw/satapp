@@ -1,0 +1,664 @@
+{
+	"info": {
+		"_postman_id": "8e12520a-d635-4860-b5f3-85c589152aed",
+		"name": "Satapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30052621"
+	},
+	"item": [
+		{
+			"name": "RegistroYLogin",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"manolo@user.com\",\r\n    \"username\": \"manologasming\",\r\n    \"password\": \"123\",\r\n    \"verifyPassword\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/register",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"access_token\", json.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/login",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "user_id",
+								"value": "20929cb4-7374-4f67-b412-10d774aa47c1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/users/0b48b238-a13a-4dd8-a884-2e3fe36bd78f/validate",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"0b48b238-a13a-4dd8-a884-2e3fe36bd78f",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListaDeNoValidados",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users/no-validated",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"no-validated"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventariable",
+			"item": [
+				{
+					"name": "InventariableList",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/inventariable",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"inventariable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InventariableById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/inventariable/3a96af0e-4417-476e-908d-31c9508ee36d",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"inventariable",
+								"3a96af0e-4417-476e-908d-31c9508ee36d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InventariableTipos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/inventariable/tipos",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"inventariable",
+								"tipos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InventariableUbicaciones",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/inventariable/ubicaciones",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"inventariable",
+								"ubicaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InventariableNew",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"teclado\",\r\n    \"type\": \"perifericos\",\r\n    \"ubication\": \"Sevilla\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/inventariable/new",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"inventariable",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InventariableEdit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"mesagaming\",\r\n    \"type\": \"mueble\",\r\n    \"ubication\": \"Sevilla\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/inventariable/edit/abe615dd-f341-4a4c-9b69-1fe0c2a256df",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"inventariable",
+								"edit",
+								"abe615dd-f341-4a4c-9b69-1fe0c2a256df"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InventariableDelete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/inventariable/delete/103e4de2-6983-4846-aac1-0dd2",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"inventariable",
+								"delete",
+								"103e4de2-6983-4846-aac1-0dd2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "TicketNew",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"se me rompió la sillaa\",\r\n    \"description\": \"se me ha roto la silla y no se como arreglarlaa\",\r\n    \"inventariableId\": \"59a79f53-f347-40ba-90e9-7d4547637a26\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/ticket/new",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TicketEdit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/ticket/edit/{id}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"edit",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TicketDelete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/ticket/delete/{id}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"delete",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TicketAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/ticket/all",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TicketInventariable",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/ticket/inventariable/{inventariableId}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"inventariable",
+								"{inventariableId}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TicketCambiarEstado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/ticket/{id}/estado",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"{id}",
+								"estado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TicketAsignar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/ticket/{id}/asignar",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"{id}",
+								"asignar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TicketMe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/ticket/{id}/me",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ticket",
+								"{id}",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

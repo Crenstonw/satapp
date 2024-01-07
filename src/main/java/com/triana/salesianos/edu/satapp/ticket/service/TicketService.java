@@ -26,7 +26,7 @@ public class TicketService {
     private final UserRepository userRepository;
     public TicketDto createNewTicket(CreateTicketRequest createTicketRequest) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //Optional<User> user = userRepository.findFirstByEmail(userDetails.getUsername());
+        Optional<User> user = userRepository.findFirstByEmail(userDetails.getUsername());
         Optional<Inventariable> inventariable = inventariableRepository.findById(UUID.fromString(createTicketRequest.inventariableId()));
         Ticket newTicket = Ticket.builder()
                 .id(UUID.randomUUID())
@@ -34,7 +34,7 @@ public class TicketService {
                 .description(createTicketRequest.description())
                 .state(State.OPENED)
                 .inventariable(inventariable.orElse(null))
-                //.user(user.orElse(null))
+                .user(user.orElse(null))
                 .build();
         Ticket result = ticketRepository.save(newTicket);
         return TicketDto.of(result);
