@@ -63,7 +63,7 @@ public class UserController {
         if(user.isPresent()) {
             User validUser = user.get();
             userService.validate(validUser);
-            return ResponseEntity.status(HttpStatus.OK).body("Validado con éxito");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             throw new UserNotFoundException();
         }

@@ -7,16 +7,15 @@ import org.springframework.web.ErrorResponseException;
 import java.net.URI;
 import java.time.Instant;
 
-public class EmptyListException extends ErrorResponseException {
+public class InventariableNotFoundException extends ErrorResponseException {
+    public InventariableNotFoundException() {
 
-    public EmptyListException() {
-
-        super(HttpStatus.NOT_FOUND, of("List is empty"), null);
+        super(HttpStatus.NOT_FOUND, of("The inventariable does not exists"), null);
     }
 
     public static ProblemDetail of(String message) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, message);
-        problemDetail.setTitle("List is empty");
+        problemDetail.setTitle("The inventariable does not exists");
         problemDetail.setType(URI.create("https://api.midominio.com/errors/user-not-found"));
         problemDetail.setProperty("entityType", "Note");
         problemDetail.setProperty("timestamp", Instant.now());

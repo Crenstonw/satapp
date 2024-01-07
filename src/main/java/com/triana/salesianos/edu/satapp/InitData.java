@@ -34,12 +34,12 @@ public class InitData {
                 .build();
         userRepository.save(admin);
 
-        Inventariable mesa = Inventariable.builder()
+        /*Inventariable mesa = Inventariable.builder()
                 .id(UUID.randomUUID())
                 .name("mesa")
                 .type("mueble")
                 .ubication("Sevilla")
                 .build();
-        inventariableRepository.save(mesa);
+        inventariableRepository.save(mesa);*/
     }
 }

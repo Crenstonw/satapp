@@ -1,6 +1,7 @@
 package com.triana.salesianos.edu.satapp.inventariable.controller;
 
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
+import com.triana.salesianos.edu.satapp.inventariable.exception.InventariableNotFoundException;
 import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
 import com.triana.salesianos.edu.satapp.inventariable.service.InventariableService;
 import com.triana.salesianos.edu.satapp.user.exception.EmptyListException;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +28,12 @@ public class InventariableController {
     }
 
     @GetMapping("/inventariable/{id}")
-    public ResponseEntity<Inventariable> getInventariableById(@PathVariable String id) {
-        return null;
+    public ResponseEntity<Optional<InventariableDto>> getInventariableById(@PathVariable String id) {
+        Optional<InventariableDto> result = inventariableService.getInventariableById(id);
+        if(result.isPresent())
+            return ResponseEntity.ok().body(result);
+        else
+            throw new InventariableNotFoundException();
     }
 
     @GetMapping("/inventariable/tipos")
