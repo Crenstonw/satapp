@@ -75,6 +75,7 @@ public class InventariableController {
 
     @DeleteMapping("/inventariable/delete/{id}")
     public ResponseEntity<Inventariable> deleteInventariable(@PathVariable String id) {
-        return null;
+        inventariableService.deleteInventariable(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
