@@ -1,8 +1,13 @@
 package com.triana.salesianos.edu.satapp.ticket.controller;
 
+import com.triana.salesianos.edu.satapp.inventariable.dto.CreateInventariableRequest;
+import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
+import com.triana.salesianos.edu.satapp.ticket.dto.CreateTicketRequest;
+import com.triana.salesianos.edu.satapp.ticket.dto.TicketDto;
 import com.triana.salesianos.edu.satapp.ticket.modal.Ticket;
 import com.triana.salesianos.edu.satapp.ticket.service.TicketService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +18,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TicketController {
 
-    //private final TicketService ticketService;
+    private final TicketService ticketService;
 
     @PostMapping("/ticket/new")
-    public ResponseEntity<Ticket> newTicket() {
-        return null;
+    public ResponseEntity<TicketDto> newTicket(@RequestBody CreateTicketRequest createTicketRequest) {
+        TicketDto ticket = ticketService.createNewTicket(createTicketRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
     }
 
     @PutMapping("/ticket/edit/{id}")
