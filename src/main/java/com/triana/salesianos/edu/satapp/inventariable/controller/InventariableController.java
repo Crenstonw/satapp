@@ -1,9 +1,6 @@
 package com.triana.salesianos.edu.satapp.inventariable.controller;
 
-import com.triana.salesianos.edu.satapp.inventariable.dto.CreateInventariableRequest;
-import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
-import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableTypeDto;
-import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableUbicationDto;
+import com.triana.salesianos.edu.satapp.inventariable.dto.*;
 import com.triana.salesianos.edu.satapp.inventariable.exception.InventariableNotFoundException;
 import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
 import com.triana.salesianos.edu.satapp.inventariable.service.InventariableService;
@@ -61,14 +58,19 @@ public class InventariableController {
     //Solo administradores
 
     @PostMapping("/inventariable/new")
-    public ResponseEntity<Inventariable> newInvetariable(@RequestBody CreateInventariableRequest createInventariableRequest) {
-        Inventariable inventariable = inventariableService.createNewInventariable(createInventariableRequest);
+    public ResponseEntity<InventariableDto> newInvetariable(@RequestBody CreateInventariableRequest createInventariableRequest) {
+        InventariableDto inventariable = inventariableService.createNewInventariable(createInventariableRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(inventariable);
     }
 
     @PutMapping("/inventariable/edit/{id}")
-    public ResponseEntity<Inventariable> editInventariable(@PathVariable String id) {
-        return null;
+    public ResponseEntity<InventariableDto> editInventariable(
+            @PathVariable String id,
+            @RequestBody EditInventariableRequest editInventariableRequest)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(inventariableService.EditInventariable(id, editInventariableRequest));
     }
 
     @DeleteMapping("/inventariable/delete/{id}")
