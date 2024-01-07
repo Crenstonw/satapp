@@ -52,4 +52,5 @@ public interface InventariableRepository extends JpaRepository<Inventariable, UU
             FROM Inventariable i
             """)
     List<InventariableUbicationDto> AllInventariableUbications();
+
 }
