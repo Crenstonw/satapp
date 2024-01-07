@@ -52,7 +52,7 @@ public class InventariableService {
     public InventariableDto EditInventariable(String id, EditInventariableRequest newInventariable) {
         Inventariable inventariable = inventariableRepository.findById(UUID.fromString(id))
                 .orElseThrow(() -> new InventariableNotFoundException());
-        
+
         inventariable.setName(newInventariable.name());
         inventariable.setType(newInventariable.type());
         inventariable.setUbication(newInventariable.ubication());
@@ -60,5 +60,11 @@ public class InventariableService {
         Inventariable result = inventariableRepository.save(inventariable);
 
         return InventariableDto.of(result);
+    }
+
+    public void deleteInventariable(String id) {
+        Inventariable inventariable = inventariableRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new InventariableNotFoundException());
+        inventariableRepository.delete(inventariable);
     }
 }
