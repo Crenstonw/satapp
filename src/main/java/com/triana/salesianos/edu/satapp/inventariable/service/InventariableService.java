@@ -2,6 +2,7 @@ package com.triana.salesianos.edu.satapp.inventariable.service;
 
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableTypeDto;
+import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableUbicationDto;
 import com.triana.salesianos.edu.satapp.inventariable.repo.InventariableRepository;
 import io.jsonwebtoken.io.ParserBuilder;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,11 @@ public class InventariableService {
 
     public List<InventariableTypeDto> getAllInventariableTypes() {
         List<InventariableTypeDto> result = inventariableRepository.AllInventariableTypes();
+        return result;
+    }
+
+    public List<InventariableUbicationDto> getAllInventariableUbications() {
+        List<InventariableUbicationDto> result = inventariableRepository.AllInventariableUbications();
         return result;
     }
 }
