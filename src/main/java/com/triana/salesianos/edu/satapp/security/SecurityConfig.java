@@ -72,6 +72,9 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(antMatcher("/users/**")).hasRole("ADMIN")
+                        .requestMatchers(antMatcher("/inventariable/new")).hasRole("ADMIN")
+                        .requestMatchers(antMatcher("/inventariable/edit/**")).hasRole("ADMIN")
+                        .requestMatchers(antMatcher("/inventariable/delete/**")).hasRole("ADMIN")
                         .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
