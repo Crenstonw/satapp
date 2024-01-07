@@ -34,12 +34,28 @@ public class InitData {
                 .build();
         userRepository.save(admin);
 
-        /*Inventariable mesa = Inventariable.builder()
+        Inventariable mesa = Inventariable.builder()
                 .id(UUID.randomUUID())
                 .name("mesa")
                 .type("mueble")
                 .ubication("Sevilla")
                 .build();
-        inventariableRepository.save(mesa);*/
+        inventariableRepository.save(mesa);
+
+        Inventariable silla = Inventariable.builder()
+                .id(UUID.randomUUID())
+                .name("silla")
+                .type("mueble")
+                .ubication("Huelva")
+                .build();
+        inventariableRepository.save(silla);
+
+        Inventariable pc = Inventariable.builder()
+                .id(UUID.randomUUID())
+                .name("pc")
+                .type("ordenador")
+                .ubication("Sevilla")
+                .build();
+        inventariableRepository.save(pc);
     }
 }

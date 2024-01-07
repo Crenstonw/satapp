@@ -1,6 +1,7 @@
 package com.triana.salesianos.edu.satapp.inventariable.controller;
 
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
+import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableTypeDto;
 import com.triana.salesianos.edu.satapp.inventariable.exception.InventariableNotFoundException;
 import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
 import com.triana.salesianos.edu.satapp.inventariable.service.InventariableService;
@@ -37,8 +38,12 @@ public class InventariableController {
     }
 
     @GetMapping("/inventariable/tipos")
-    public ResponseEntity<List<Inventariable>> getInventariableTypes() {
-        return null;
+    public ResponseEntity<List<InventariableTypeDto>> getInventariableTypes() {
+        List<InventariableTypeDto> result = inventariableService.getAllInventariableTypes();
+        if(result.isEmpty())
+            throw new EmptyListException();
+        else
+            return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/inventariable/ubicaciones")
