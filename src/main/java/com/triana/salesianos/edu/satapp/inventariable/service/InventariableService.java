@@ -1,9 +1,7 @@
 package com.triana.salesianos.edu.satapp.inventariable.service;
 
-import com.triana.salesianos.edu.satapp.inventariable.dto.CreateInventariableRequest;
-import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
-import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableTypeDto;
-import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableUbicationDto;
+import com.triana.salesianos.edu.satapp.inventariable.dto.*;
+import com.triana.salesianos.edu.satapp.inventariable.exception.InventariableNotFoundException;
 import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
 import com.triana.salesianos.edu.satapp.inventariable.repo.InventariableRepository;
 import io.jsonwebtoken.io.ParserBuilder;
@@ -40,13 +38,27 @@ public class InventariableService {
         return result;
     }
 
-    public Inventariable createNewInventariable(CreateInventariableRequest createInventariableRequest) {
+    public InventariableDto createNewInventariable(CreateInventariableRequest createInventariableRequest) {
         Inventariable newInventariable = Inventariable.builder()
                 .id(UUID.randomUUID())
                 .name(createInventariableRequest.name())
                 .type(createInventariableRequest.type())
                 .ubication(createInventariableRequest.ubication())
                 .build();
-        return inventariableRepository.save(newInventariable);
+        Inventariable result = inventariableRepository.save(newInventariable);
+        return InventariableDto.of(result);
+    }
+
+    public InventariableDto EditInventariable(String id, EditInventariableRequest newInventariable) {
+        Inventariable inventariable = inventariableRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new InventariableNotFoundException());
+        
+        inventariable.setName(newInventariable.name());
+        inventariable.setType(newInventariable.type());
+        inventariable.setUbication(newInventariable.ubication());
+
+        Inventariable result = inventariableRepository.save(inventariable);
+
+        return InventariableDto.of(result);
     }
 }
