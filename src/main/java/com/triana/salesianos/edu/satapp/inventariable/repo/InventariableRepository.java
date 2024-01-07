@@ -2,6 +2,7 @@ package com.triana.salesianos.edu.satapp.inventariable.repo;
 
 import com.triana.salesianos.edu.satapp.inventariable.controller.InventariableController;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
+import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableTypeDto;
 import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,4 +35,12 @@ public interface InventariableRepository extends JpaRepository<Inventariable, UU
             WHERE i.id = ?1
             """)
     Optional<InventariableDto> findInventariableById(UUID id);
+
+    @Query("""
+            SELECT DISTINCT new com.triana.salesianos.edu.satapp.inventariable.dto.InventariableTypeDto(
+            i.type
+            )
+            FROM Inventariable i
+            """)
+    List<InventariableTypeDto> AllInventariableTypes();
 }
