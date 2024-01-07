@@ -1,5 +1,6 @@
 package com.triana.salesianos.edu.satapp.inventariable.controller;
 
+import com.triana.salesianos.edu.satapp.inventariable.dto.CreateInventariableRequest;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableTypeDto;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableUbicationDto;
@@ -8,6 +9,7 @@ import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
 import com.triana.salesianos.edu.satapp.inventariable.service.InventariableService;
 import com.triana.salesianos.edu.satapp.user.exception.EmptyListException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,8 +61,9 @@ public class InventariableController {
     //Solo administradores
 
     @PostMapping("/inventariable/new")
-    public ResponseEntity<Inventariable> newInvetariable() {
-        return null;
+    public ResponseEntity<Inventariable> newInvetariable(@RequestBody CreateInventariableRequest createInventariableRequest) {
+        Inventariable inventariable = inventariableService.createNewInventariable(createInventariableRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(inventariable);
     }
 
     @PutMapping("/inventariable/edit/{id}")
