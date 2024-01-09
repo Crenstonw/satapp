@@ -6,6 +6,7 @@ import com.triana.salesianos.edu.satapp.ticket.dto.CreateTicketRequest;
 import com.triana.salesianos.edu.satapp.ticket.dto.TicketDto;
 import com.triana.salesianos.edu.satapp.ticket.modal.Ticket;
 import com.triana.salesianos.edu.satapp.ticket.service.TicketService;
+import com.triana.salesianos.edu.satapp.user.exception.EmptyListException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,14 @@ public class TicketController {
     //Solo administradores
 
     @GetMapping("/ticket/all")
-    public ResponseEntity<Optional<Ticket>> allTickets() {
-        return null;
+    public ResponseEntity<List<TicketDto>> allTickets() {
+        List<TicketDto> result = ticketService.getAllTickets();
+
+        if(result.isEmpty())
+            throw new EmptyListException();
+        else
+            return ResponseEntity.ok().body(result);
+
     }
 
     @GetMapping("/ticket/inventariable/{inventariableId}")
