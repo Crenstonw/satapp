@@ -40,6 +40,10 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User openedBy;
+
+    @ManyToOne
+    @JoinColumn(name = "assigned_to_id")
+    private User assignedTo;
 
 }

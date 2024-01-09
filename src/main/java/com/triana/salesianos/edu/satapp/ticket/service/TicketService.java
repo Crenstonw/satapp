@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class TicketService {
     private final UserRepository userRepository;
     public TicketDto createNewTicket(CreateTicketRequest createTicketRequest) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(userDetails.getUsername());
         Optional<User> user = userRepository.findFirstByEmail(userDetails.getUsername());
         Optional<Inventariable> inventariable = inventariableRepository.findById(UUID.fromString(createTicketRequest.inventariableId()));
         Ticket newTicket = Ticket.builder()
@@ -34,10 +36,14 @@ public class TicketService {
                 .description(createTicketRequest.description())
                 .state(State.OPENED)
                 .inventariable(inventariable.orElse(null))
-                .user(user.orElse(null))
+                .openedBy(user.orElse(null))
                 .build();
         Ticket result = ticketRepository.save(newTicket);
         return TicketDto.of(result);
+    }
+
+    public List<TicketDto> getAllTickets() {
+        return ticketRepository.getAllTickets();
     }
 }
 
