@@ -22,7 +22,7 @@ public record TicketDto(
     public static TicketDto of(Ticket t) {
         InventariableDto inventariable = InventariableDto.of(t.getInventariable());
         UserResponse openedBy = UserResponse.fromUser(t.getOpenedBy());
-        UserResponse assignedTo = UserResponse.fromUser(t.getAssignedTo());
+        UserResponse assignedTo = t.getAssignedTo() != null ? UserResponse.fromUser(t.getAssignedTo()) : null;
         return new TicketDto(
                 t.getId(),
                 t.getTitle(),

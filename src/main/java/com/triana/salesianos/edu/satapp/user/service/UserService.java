@@ -2,8 +2,6 @@ package com.triana.salesianos.edu.satapp.user.service;
 
 import com.triana.salesianos.edu.satapp.user.dto.CreateUserRequest;
 import com.triana.salesianos.edu.satapp.user.dto.UserNoValidatedRequest;
-import com.triana.salesianos.edu.satapp.user.dto.UserResponse;
-import com.triana.salesianos.edu.satapp.user.exception.EmptyListException;
 import com.triana.salesianos.edu.satapp.user.modal.User;
 import com.triana.salesianos.edu.satapp.user.modal.UserRole;
 import com.triana.salesianos.edu.satapp.user.repo.UserRepository;
@@ -39,7 +37,7 @@ public class UserService {
     }
 
     public Optional<User> findByEmail(String email) {
-        return userRepository.findFirstByEmail(email);
+        return userRepository.buscarPorEmail(email);
     }
 
     public Optional<User> findByUsername(String username) {

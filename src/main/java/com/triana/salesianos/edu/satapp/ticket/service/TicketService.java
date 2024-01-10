@@ -28,7 +28,7 @@ public class TicketService {
     public TicketDto createNewTicket(CreateTicketRequest createTicketRequest) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(userDetails.getUsername());
-        Optional<User> user = userRepository.findFirstByEmail(userDetails.getUsername());
+        Optional<User> user = userRepository.buscarPorEmail(userDetails.getUsername());
         Optional<Inventariable> inventariable = inventariableRepository.findById(UUID.fromString(createTicketRequest.inventariableId()));
         Ticket newTicket = Ticket.builder()
                 .id(UUID.randomUUID())
