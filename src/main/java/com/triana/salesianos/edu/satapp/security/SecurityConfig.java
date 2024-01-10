@@ -71,8 +71,11 @@ public class SecurityConfig {
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers(antMatcher("/patient/**")).hasRole("PATIENT")
-                        .requestMatchers(antMatcher("/sanitary/**")).hasRole("SANITARY")
+                        .requestMatchers(antMatcher("/users/**")).hasRole("ADMIN")
+                        .requestMatchers(antMatcher("/inventariable/new")).hasRole("ADMIN")
+                        .requestMatchers(antMatcher("/inventariable/edit/**")).hasRole("ADMIN")
+                        .requestMatchers(antMatcher("/inventariable/delete/**")).hasRole("ADMIN")
+                        .requestMatchers(antMatcher("/ticket/all")).hasRole("ADMIN")
                         .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -88,8 +91,7 @@ public class SecurityConfig {
         return (web -> web.ignoring()
                 .requestMatchers(
                         antMatcher("/h2-console/**"),
-                        antMatcher("/auth/register"),
-                        antMatcher("/auth/login"),
+                        antMatcher("/auth/**"),
                         antMatcher("/error")
                 ));
     }

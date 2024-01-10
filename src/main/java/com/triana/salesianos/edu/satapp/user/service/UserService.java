@@ -1,7 +1,9 @@
 package com.triana.salesianos.edu.satapp.user.service;
 
 import com.triana.salesianos.edu.satapp.user.dto.CreateUserRequest;
+import com.triana.salesianos.edu.satapp.user.dto.UserNoValidatedRequest;
 import com.triana.salesianos.edu.satapp.user.dto.UserResponse;
+import com.triana.salesianos.edu.satapp.user.exception.EmptyListException;
 import com.triana.salesianos.edu.satapp.user.modal.User;
 import com.triana.salesianos.edu.satapp.user.modal.UserRole;
 import com.triana.salesianos.edu.satapp.user.repo.UserRepository;
@@ -32,20 +34,11 @@ public class UserService {
         return createUser(createUserRequest, Set.of(UserRole.USER));
     }
 
-    public User createUserWithAdminRole(CreateUserRequest createUserRequest) {
-        return createUser(createUserRequest, Set.of(UserRole.ADMIN));
-    }
-
-    public List<User> findAll() {
-
-        return userRepository.findAll();
-    }
-
     public Optional<User> findById(UUID id) {
         return userRepository.findById(id);
     }
 
-    public Optional<UserResponse> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findFirstByEmail(email);
     }
 
@@ -53,13 +46,13 @@ public class UserService {
         return userRepository.findFirstByUsername(username);
     }
 
-    public void deleteById(UUID id) {
-        if(userRepository.existsById(id))
-            userRepository.deleteById(id);
-    }
-
-    public void validate(UUID id, User user) {
+    public void validate(User user) {
         user.setEnabled(true);
         userRepository.save(user);
+    }
+
+    public List<UserNoValidatedRequest> findNonValidated() {
+        List<UserNoValidatedRequest> busqueda = userRepository.findAllNonValidated();
+        return busqueda;
     }
 }
