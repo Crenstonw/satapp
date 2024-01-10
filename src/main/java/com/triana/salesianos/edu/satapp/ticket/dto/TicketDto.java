@@ -1,11 +1,9 @@
 package com.triana.salesianos.edu.satapp.ticket.dto;
 
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
-import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
 import com.triana.salesianos.edu.satapp.ticket.modal.State;
 import com.triana.salesianos.edu.satapp.ticket.modal.Ticket;
 import com.triana.salesianos.edu.satapp.user.dto.UserResponse;
-import com.triana.salesianos.edu.satapp.user.modal.User;
 
 import java.util.UUID;
 
