@@ -75,6 +75,7 @@ public class SecurityConfig {
                         .requestMatchers(antMatcher("/inventariable/new")).hasRole("ADMIN")
                         .requestMatchers(antMatcher("/inventariable/edit/**")).hasRole("ADMIN")
                         .requestMatchers(antMatcher("/inventariable/delete/**")).hasRole("ADMIN")
+                        .requestMatchers(antMatcher("/ticket/all")).hasRole("ADMIN")
                         .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

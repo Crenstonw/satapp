@@ -3,9 +3,11 @@ package com.triana.salesianos.edu.satapp.ticket.controller;
 import com.triana.salesianos.edu.satapp.inventariable.dto.CreateInventariableRequest;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
 import com.triana.salesianos.edu.satapp.ticket.dto.CreateTicketRequest;
+import com.triana.salesianos.edu.satapp.ticket.dto.EditTicketRequest;
 import com.triana.salesianos.edu.satapp.ticket.dto.TicketDto;
 import com.triana.salesianos.edu.satapp.ticket.modal.Ticket;
 import com.triana.salesianos.edu.satapp.ticket.service.TicketService;
+import com.triana.salesianos.edu.satapp.user.exception.EmptyListException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,24 +29,31 @@ public class TicketController {
     }
 
     @PutMapping("/ticket/edit/{id}")
-    public ResponseEntity<Ticket> editTicket(@PathVariable String id) {
-        return null;
+    public ResponseEntity<TicketDto> editTicket(@PathVariable String id, @RequestBody EditTicketRequest editTicketRequest) {
+        return ResponseEntity.ok().body(ticketService.editTicket(id, editTicketRequest));
     }
 
     @DeleteMapping("/ticket/delete/{id}")
-    public ResponseEntity<Ticket> deleteTicket(@PathVariable String id) {
-        return null;
+    public ResponseEntity<?> deleteTicket(@PathVariable String id) {
+        ticketService.deleteTicket(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     //Solo administradores
 
     @GetMapping("/ticket/all")
-    public ResponseEntity<Optional<Ticket>> allTickets() {
-        return null;
+    public ResponseEntity<List<TicketDto>> allTickets() {
+        List<TicketDto> result = ticketService.getAllTickets();
+
+        if(result.isEmpty())
+            throw new EmptyListException();
+        else
+            return ResponseEntity.ok().body(result);
+
     }
 
     @GetMapping("/ticket/inventariable/{inventariableId}")
-    public ResponseEntity<Optional<Ticket>> ticketFromInventariable(@PathVariable String inventariableId) {
+    public ResponseEntity<List<TicketDto>> ticketFromInventariable(@PathVariable String inventariableId) {
         return null;
     }
 
