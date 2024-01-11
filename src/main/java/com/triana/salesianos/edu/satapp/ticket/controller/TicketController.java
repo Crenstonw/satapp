@@ -3,6 +3,7 @@ package com.triana.salesianos.edu.satapp.ticket.controller;
 import com.triana.salesianos.edu.satapp.inventariable.dto.CreateInventariableRequest;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
 import com.triana.salesianos.edu.satapp.ticket.dto.CreateTicketRequest;
+import com.triana.salesianos.edu.satapp.ticket.dto.EditTicketRequest;
 import com.triana.salesianos.edu.satapp.ticket.dto.TicketDto;
 import com.triana.salesianos.edu.satapp.ticket.modal.Ticket;
 import com.triana.salesianos.edu.satapp.ticket.service.TicketService;
@@ -28,8 +29,8 @@ public class TicketController {
     }
 
     @PutMapping("/ticket/edit/{id}")
-    public ResponseEntity<Ticket> editTicket(@PathVariable String id) {
-        return null;
+    public ResponseEntity<TicketDto> editTicket(@PathVariable String id, @RequestBody EditTicketRequest editTicketRequest) {
+        return ResponseEntity.ok().body(ticketService.editTicket(id, editTicketRequest));
     }
 
     @DeleteMapping("/ticket/delete/{id}")
