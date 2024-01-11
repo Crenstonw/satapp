@@ -69,5 +69,13 @@ public class TicketService {
         return TicketDto.of(result);
 
     }
+
+    public void deleteTicket(String id) {
+        Optional<Ticket> ticket = ticketRepository.findFirstById(UUID.fromString(id));
+        if(ticket.isPresent())
+            ticketRepository.delete(ticket.orElse(null));
+        else
+            throw new TicketNotFoundException();
+    }
 }
 
