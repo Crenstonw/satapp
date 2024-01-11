@@ -15,6 +15,8 @@ import java.util.UUID;
 
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
 
+    Optional<Ticket> findFirstById(UUID id);
+
     @Query("""
             SELECT t FROM Ticket t
             """)

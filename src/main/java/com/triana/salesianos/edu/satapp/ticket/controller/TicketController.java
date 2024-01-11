@@ -34,8 +34,9 @@ public class TicketController {
     }
 
     @DeleteMapping("/ticket/delete/{id}")
-    public ResponseEntity<Ticket> deleteTicket(@PathVariable String id) {
-        return null;
+    public ResponseEntity<?> deleteTicket(@PathVariable String id) {
+        ticketService.deleteTicket(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     //Solo administradores
@@ -52,7 +53,7 @@ public class TicketController {
     }
 
     @GetMapping("/ticket/inventariable/{inventariableId}")
-    public ResponseEntity<Optional<Ticket>> ticketFromInventariable(@PathVariable String inventariableId) {
+    public ResponseEntity<List<TicketDto>> ticketFromInventariable(@PathVariable String inventariableId) {
         return null;
     }
 
