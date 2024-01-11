@@ -51,23 +51,17 @@ public class TicketService {
     }
 
     public TicketDto editTicket(String id, EditTicketRequest editTicketRequest) {
-        UUID uuidId = UUID.fromString(id);
-        Optional<TicketDto> ticket = ticketRepository.getTicketById(uuidId);
-        Optional<Inventariable> inventariable = ticketRepository.getInventariableInf(uuidId);
-        Optional<User> openedBy = ticketRepository.getOpenedByInf(uuidId);
-        Optional<User> assignedTo = ticketRepository.getAssignedToInf(uuidId);
-        Ticket result = Ticket.builder()
-                .id(ticket.get().id())
-                .title(editTicketRequest.title())
-                .description(editTicketRequest.description())
-                .state(ticket.get().state())
-                .inventariable(inventariable.orElse(null))
-                .openedBy(openedBy.orElse(null))
-                .assignedTo(assignedTo.orElse(null))
-                .build();
-        ticketRepository.save(result);
-        return TicketDto.of(result);
+        Optional<Ticket> optionalTicket = ticketRepository.findFirstById(UUID.fromString(id));
+        if(optionalTicket.isPresent()) {
+            Ticket ticket = optionalTicket.get();
 
+            ticket.setTitle(editTicketRequest.title());
+            ticket.setDescription(editTicketRequest.description());
+
+            ticketRepository.save(ticket);
+            return TicketDto.of(ticket);
+        } else
+            throw new TicketNotFoundException();
     }
 
     public void deleteTicket(String id) {
