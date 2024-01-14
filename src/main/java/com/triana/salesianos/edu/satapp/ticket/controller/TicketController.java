@@ -58,8 +58,8 @@ public class TicketController {
     }
 
     @PutMapping("/ticket/{id}/estado")
-    public ResponseEntity<Ticket> ticketStatus(@PathVariable String id) {
-        return null;
+    public ResponseEntity<TicketDto> ticketStatus(@PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.OK).body(ticketService.changeState(id));
     }
 
     @PutMapping("/ticket/{id}/asignar")
