@@ -68,5 +68,18 @@ public class TicketService {
         else
             throw new TicketNotFoundException();
     }
+
+    public TicketDto changeState(String id) {
+        Optional<Ticket> find = ticketRepository.findFirstById(UUID.fromString(id));
+        if(find.isPresent()) {
+            Ticket ticket = find.get();
+            if(ticket.getState() == State.OPENED )
+                ticket.setState(State.CLOSED);
+            else
+                ticket.setState(State.OPENED);
+            ticketRepository.save(ticket);
+            return TicketDto.of(ticket);
+        } else throw new TicketNotFoundException();
+    }
 }
 
