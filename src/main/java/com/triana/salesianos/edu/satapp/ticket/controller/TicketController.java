@@ -2,6 +2,7 @@ package com.triana.salesianos.edu.satapp.ticket.controller;
 
 import com.triana.salesianos.edu.satapp.inventariable.dto.CreateInventariableRequest;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
+import com.triana.salesianos.edu.satapp.ticket.dto.AssignAdminDto;
 import com.triana.salesianos.edu.satapp.ticket.dto.CreateTicketRequest;
 import com.triana.salesianos.edu.satapp.ticket.dto.EditTicketRequest;
 import com.triana.salesianos.edu.satapp.ticket.dto.TicketDto;
@@ -34,8 +35,9 @@ public class TicketController {
     }
 
     @DeleteMapping("/ticket/delete/{id}")
-    public ResponseEntity<Ticket> deleteTicket(@PathVariable String id) {
-        return null;
+    public ResponseEntity<?> deleteTicket(@PathVariable String id) {
+        ticketService.deleteTicket(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     //Solo administradores
@@ -52,18 +54,18 @@ public class TicketController {
     }
 
     @GetMapping("/ticket/inventariable/{inventariableId}")
-    public ResponseEntity<Optional<Ticket>> ticketFromInventariable(@PathVariable String inventariableId) {
+    public ResponseEntity<List<TicketDto>> ticketFromInventariable(@PathVariable String inventariableId) {
         return null;
     }
 
     @PutMapping("/ticket/{id}/estado")
-    public ResponseEntity<Ticket> ticketStatus(@PathVariable String id) {
-        return null;
+    public ResponseEntity<TicketDto> ticketStatus(@PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.OK).body(ticketService.changeState(id));
     }
 
     @PutMapping("/ticket/{id}/asignar")
-    public ResponseEntity<Ticket> ticketAssignTechnician(@PathVariable String id) {
-        return null;
+    public ResponseEntity<TicketDto> ticketAssignTechnician(@PathVariable String id, @RequestBody AssignAdminDto assignAdminDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(ticketService.assignTo(id, assignAdminDto));
     }
 
     @GetMapping("/ticket/asignados/me")
