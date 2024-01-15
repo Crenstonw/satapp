@@ -5,6 +5,7 @@ import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableTypeDto;
 import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableUbicationDto;
 import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
+import com.triana.salesianos.edu.satapp.ticket.modal.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -52,5 +53,13 @@ public interface InventariableRepository extends JpaRepository<Inventariable, UU
             FROM Inventariable i
             """)
     List<InventariableUbicationDto> AllInventariableUbications();
+
+    @Query("""
+            SELECT t
+            FROM Inventariable i
+            CROSS JOIN Ticket t
+            WHERE i.id = ?1
+            """)
+    List<Ticket> findAllTicketsWhereInventariableId(UUID id);
 
 }
