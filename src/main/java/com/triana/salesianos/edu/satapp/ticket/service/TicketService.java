@@ -1,24 +1,25 @@
 package com.triana.salesianos.edu.satapp.ticket.service;
 
-import com.triana.salesianos.edu.satapp.inventariable.dto.InventariableDto;
 import com.triana.salesianos.edu.satapp.inventariable.modal.Inventariable;
 import com.triana.salesianos.edu.satapp.inventariable.repo.InventariableRepository;
+import com.triana.salesianos.edu.satapp.ticket.dto.AssignAdminDto;
 import com.triana.salesianos.edu.satapp.ticket.dto.CreateTicketRequest;
 import com.triana.salesianos.edu.satapp.ticket.dto.EditTicketRequest;
 import com.triana.salesianos.edu.satapp.ticket.dto.TicketDto;
 import com.triana.salesianos.edu.satapp.ticket.exception.TicketNotFoundException;
+import com.triana.salesianos.edu.satapp.ticket.exception.UserNotAdminException;
 import com.triana.salesianos.edu.satapp.ticket.modal.State;
 import com.triana.salesianos.edu.satapp.ticket.modal.Ticket;
 import com.triana.salesianos.edu.satapp.ticket.repo.TicketRepository;
-import com.triana.salesianos.edu.satapp.user.dto.UserResponse;
+import com.triana.salesianos.edu.satapp.user.exception.UserNotFoundException;
 import com.triana.salesianos.edu.satapp.user.modal.User;
+import com.triana.salesianos.edu.satapp.user.modal.UserRole;
 import com.triana.salesianos.edu.satapp.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -70,6 +71,35 @@ public class TicketService {
             ticketRepository.delete(ticket.orElse(null));
         else
             throw new TicketNotFoundException();
+    }
+
+    public TicketDto changeState(String id) {
+        Optional<Ticket> find = ticketRepository.findFirstById(UUID.fromString(id));
+        if(find.isPresent()) {
+            Ticket ticket = find.get();
+            if(ticket.getState() == State.OPENED )
+                ticket.setState(State.CLOSED);
+            else
+                ticket.setState(State.OPENED);
+            ticketRepository.save(ticket);
+            return TicketDto.of(ticket);
+        } else throw new TicketNotFoundException();
+    }
+
+    public  TicketDto assignTo(String id, AssignAdminDto mail) {
+        Optional<Ticket> findTicket = ticketRepository.findFirstById(UUID.fromString(id));
+        Optional<User> findUser = userRepository.buscarPorEmail(mail.email());
+        if (findUser.isEmpty())
+            throw new UserNotFoundException();
+        if (findTicket.isEmpty())
+            throw new TicketNotFoundException();
+        Ticket ticket = findTicket.get();
+        User user = findUser.get();
+        if(user.getUserRole().contains(UserRole.ADMIN)) {
+            ticket.setAssignedTo(user);
+            ticketRepository.save(ticket);
+            return TicketDto.of(ticket);
+        } else throw new UserNotAdminException();
     }
 }
 
