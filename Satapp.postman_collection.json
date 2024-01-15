@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"manolo@user.com\",\r\n    \"username\": \"manologasming\",\r\n    \"password\": \"123\",\r\n    \"verifyPassword\": \"123\"\r\n}",
+							"raw": "{\r\n    \"email\": \"mano@user.com\",\r\n    \"username\": \"asming\",\r\n    \"password\": \"123\",\r\n    \"verifyPassword\": \"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -109,13 +109,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{localhost}}/users/0b48b238-a13a-4dd8-a884-2e3fe36bd78f/validate",
+							"raw": "{{localhost}}/users/12b77dc1-f177-45be-8cdf-79c53aedc61b/validate",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
 								"users",
-								"0b48b238-a13a-4dd8-a884-2e3fe36bd78f",
+								"12b77dc1-f177-45be-8cdf-79c53aedc61b",
 								"validate"
 							]
 						}
@@ -340,14 +340,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{localhost}}/inventariable/edit/abe615dd-f341-4a4c-9b69-1fe0c2a256df",
+							"raw": "{{localhost}}/inventariable/edit/2a785a00-4e21-4388-91f6-fb2e6b2c7833",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
 								"inventariable",
 								"edit",
-								"abe615dd-f341-4a4c-9b69-1fe0c2a256df"
+								"2a785a00-4e21-4388-91f6-fb2e6b2c7833"
 							]
 						}
 					},
@@ -404,7 +404,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"se me rompió la sillaa\",\r\n    \"description\": \"se me ha roto la silla y no se como arreglarlaa\",\r\n    \"inventariableId\": \"59a79f53-f347-40ba-90e9-7d4547637a26\"\r\n}",
+							"raw": "{\r\n    \"title\": \"se me rompió la sillaa\",\r\n    \"description\": \"se me ha roto la silla y no se como arreglarlaa\",\r\n    \"inventariableId\": \"2e356163-51ce-48ef-a11b-ca4b7178e0e3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -439,15 +439,24 @@
 						},
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"te he pito\",\r\n    \"description\": \"descripcion genérica\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{localhost}}/ticket/edit/{id}",
+							"raw": "{{localhost}}/ticket/edit/a6927a0b-8f8d-47fb-9db0-567c037c69b7",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
 								"ticket",
 								"edit",
-								"{id}"
+								"a6927a0b-8f8d-47fb-9db0-567c037c69b7"
 							]
 						}
 					},
@@ -469,14 +478,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{localhost}}/ticket/delete/{id}",
+							"raw": "{{localhost}}/ticket/delete/a6927a0b-8f8d-47fb-9db0-567c037c69b7",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
 								"ticket",
 								"delete",
-								"{id}"
+								"a6927a0b-8f8d-47fb-9db0-567c037c69b7"
 							]
 						}
 					},
@@ -526,14 +535,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{localhost}}/ticket/inventariable/{inventariableId}",
+							"raw": "{{localhost}}/ticket/inventariable/2e356163-51ce-48ef-a11b-ca4b7178e0e3",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
 								"ticket",
 								"inventariable",
-								"{inventariableId}"
+								"2e356163-51ce-48ef-a11b-ca4b7178e0e3"
 							]
 						}
 					},
@@ -555,13 +564,13 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{localhost}}/ticket/{id}/estado",
+							"raw": "{{localhost}}/ticket/d921eea8-ef62-4938-9a36-38dcf3b56d20/estado",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
 								"ticket",
-								"{id}",
+								"d921eea8-ef62-4938-9a36-38dcf3b56d20",
 								"estado"
 							]
 						}
@@ -583,14 +592,23 @@
 						},
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@admin.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{localhost}}/ticket/{id}/asignar",
+							"raw": "{{localhost}}/ticket/6ec5f945-2591-4a05-bca9-1dbdecc5d4bc/asignar",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
 								"ticket",
-								"{id}",
+								"6ec5f945-2591-4a05-bca9-1dbdecc5d4bc",
 								"asignar"
 							]
 						}
@@ -613,13 +631,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{localhost}}/ticket/{id}/me",
+							"raw": "{{localhost}}/ticket/asignados/me",
 							"host": [
 								"{{localhost}}"
 							],
 							"path": [
 								"ticket",
-								"{id}",
+								"asignados",
 								"me"
 							]
 						}
@@ -652,7 +670,7 @@
 	"variable": [
 		{
 			"key": "localhost",
-			"value": "",
+			"value": "http://localhost:8080",
 			"type": "string"
 		},
 		{
