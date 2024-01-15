@@ -77,7 +77,7 @@ public class TicketService {
         Optional<Ticket> find = ticketRepository.findFirstById(UUID.fromString(id));
         if(find.isPresent()) {
             Ticket ticket = find.get();
-            if(ticket.getState() == State.OPENED )
+            if(ticket.getState() == State.OPENED)
                 ticket.setState(State.CLOSED);
             else
                 ticket.setState(State.OPENED);
@@ -100,6 +100,7 @@ public class TicketService {
             ticketRepository.save(ticket);
             return TicketDto.of(ticket);
         } else throw new UserNotAdminException();
+
     }
 }
 
