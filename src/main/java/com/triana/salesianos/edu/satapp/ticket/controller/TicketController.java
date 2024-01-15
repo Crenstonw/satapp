@@ -69,7 +69,8 @@ public class TicketController {
     }
 
     @GetMapping("/ticket/asignados/me")
-    public ResponseEntity<Optional<Ticket>> ticketAssigntToMe() {
-        return null;
+    public ResponseEntity<List<TicketDto>> ticketAssignedtToMe() {
+
+        return ResponseEntity.ok().body(ticketService.findAllTicketsAssignedToMe());
     }
 }
