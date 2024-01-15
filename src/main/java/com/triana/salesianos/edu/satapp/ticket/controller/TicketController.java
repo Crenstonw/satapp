@@ -55,7 +55,7 @@ public class TicketController {
 
     @GetMapping("/ticket/inventariable/{inventariableId}")
     public ResponseEntity<List<TicketDto>> ticketFromInventariable(@PathVariable String inventariableId) {
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(ticketService.findAllTicketsFromInventariable(inventariableId));
     }
 
     @PutMapping("/ticket/{id}/estado")
