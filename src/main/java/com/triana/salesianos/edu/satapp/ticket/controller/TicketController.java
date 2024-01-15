@@ -55,7 +55,7 @@ public class TicketController {
 
     @GetMapping("/ticket/inventariable/{inventariableId}")
     public ResponseEntity<List<TicketDto>> ticketFromInventariable(@PathVariable String inventariableId) {
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(ticketService.findAllTicketsFromInventariable(inventariableId));
     }
 
     @PutMapping("/ticket/{id}/estado")
@@ -69,7 +69,8 @@ public class TicketController {
     }
 
     @GetMapping("/ticket/asignados/me")
-    public ResponseEntity<Optional<Ticket>> ticketAssigntToMe() {
-        return null;
+    public ResponseEntity<List<TicketDto>> ticketAssignedtToMe() {
+
+        return ResponseEntity.ok().body(ticketService.findAllTicketsAssignedToMe());
     }
 }

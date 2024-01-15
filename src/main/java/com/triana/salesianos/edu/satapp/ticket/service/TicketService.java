@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -100,6 +101,31 @@ public class TicketService {
             ticketRepository.save(ticket);
             return TicketDto.of(ticket);
         } else throw new UserNotAdminException();
+    }
+
+    public List<TicketDto> findAllTicketsFromInventariable(String inventariableId) {
+        List<Ticket> find = inventariableRepository.findAllTicketsWhereInventariableId(UUID.fromString(inventariableId));
+
+        if(!find.isEmpty()) {
+            List<TicketDto> result = new ArrayList<>();
+            for(Ticket u : find) {
+                result.add(TicketDto.of(u));
+            }
+            return result;
+        } else throw new TicketNotFoundException();
+    }
+
+    public List<TicketDto> findAllTicketsAssignedToMe() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Ticket> find = userRepository.findAllTicketByUserId(userDetails.getUsername());
+
+        if(!find.isEmpty()) {
+            List<TicketDto> result = new ArrayList<>();
+            for(Ticket u : find) {
+                result.add(TicketDto.of(u));
+            }
+            return result;
+        } else throw new TicketNotFoundException();
     }
 }
 

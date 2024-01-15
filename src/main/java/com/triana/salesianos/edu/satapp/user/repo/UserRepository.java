@@ -1,5 +1,6 @@
 package com.triana.salesianos.edu.satapp.user.repo;
 
+import com.triana.salesianos.edu.satapp.ticket.modal.Ticket;
 import com.triana.salesianos.edu.satapp.user.dto.UserNoValidatedRequest;
 import com.triana.salesianos.edu.satapp.user.modal.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,12 @@ public interface UserRepository extends JpaRepository<User, UUID> {
             WHERE u.enabled = FALSE
             """)
     List<UserNoValidatedRequest> findAllNonValidated();
+
+    @Query("""
+            SELECT t
+            FROM User u
+            CROSS JOIN Ticket t
+            WHERE u.email = ?1
+            """)
+    List<Ticket> findAllTicketByUserId(String email);
 }

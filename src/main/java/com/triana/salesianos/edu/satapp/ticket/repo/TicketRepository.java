@@ -33,6 +33,4 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
             WHERE t.id = ?1
             """)
     Optional<TicketDto> getTicketById(UUID id);
-
-
 }
