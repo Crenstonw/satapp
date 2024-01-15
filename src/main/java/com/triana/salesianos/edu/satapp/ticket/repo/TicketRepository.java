@@ -33,11 +33,4 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
             WHERE t.id = ?1
             """)
     Optional<TicketDto> getTicketById(UUID id);
-
-    @Query("""
-            SELECT t
-            FROM Ticket t
-            WHERE t.inventariable.id = ?1
-            """)
-    List<Ticket> findAllTicketsWhereInventariableId(UUID id);
 }

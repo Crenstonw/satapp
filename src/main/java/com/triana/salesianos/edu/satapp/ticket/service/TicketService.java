@@ -114,5 +114,18 @@ public class TicketService {
             return result;
         } else throw new TicketNotFoundException();
     }
+
+    public List<TicketDto> findAllTicketsAssignedToMe() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Ticket> find = userRepository.findAllTicketByUserId(userDetails.getUsername());
+
+        if(!find.isEmpty()) {
+            List<TicketDto> result = new ArrayList<>();
+            for(Ticket u : find) {
+                result.add(TicketDto.of(u));
+            }
+            return result;
+        } else throw new TicketNotFoundException();
+    }
 }
 
