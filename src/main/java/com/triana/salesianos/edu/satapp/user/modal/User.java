@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 @Table(name = "user_entity")
 @EntityListeners(AuditingEntityListener.class)
-//@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -72,6 +71,7 @@ public class User implements UserDetails {
     @Builder.Default
     private boolean enabled = false;
 
+    public String getUserUsername() {return username;}
     @Override
     public String getUsername() {
         return email;

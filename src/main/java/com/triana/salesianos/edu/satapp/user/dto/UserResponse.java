@@ -24,7 +24,7 @@ public class UserResponse {
     public static UserResponse fromUser(User user) {
         return UserResponse.builder()
                 .id(user.getId().toString())
-                .username(user.getUsername())
+                .username(user.getUserUsername())
                 .email(user.getEmail())
                 .createdAt(user.getCreatedAt())
                 .build();
