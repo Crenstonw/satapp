@@ -6,6 +6,7 @@ import com.triana.salesianos.edu.satapp.ticket.dto.AssignAdminDto;
 import com.triana.salesianos.edu.satapp.ticket.dto.CreateTicketRequest;
 import com.triana.salesianos.edu.satapp.ticket.dto.EditTicketRequest;
 import com.triana.salesianos.edu.satapp.ticket.dto.TicketDto;
+import com.triana.salesianos.edu.satapp.ticket.exception.PermisonDeniedException;
 import com.triana.salesianos.edu.satapp.ticket.exception.TicketNotFoundException;
 import com.triana.salesianos.edu.satapp.ticket.exception.UserNotAdminException;
 import com.triana.salesianos.edu.satapp.ticket.modal.State;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.MethodNotAllowedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,23 +55,32 @@ public class TicketService {
     }
 
     public TicketDto editTicket(String id, EditTicketRequest editTicketRequest) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> findUser = userRepository.buscarPorEmail(userDetails.getUsername());
+        User user = findUser.get();
         Optional<Ticket> optionalTicket = ticketRepository.findFirstById(UUID.fromString(id));
         if(optionalTicket.isPresent()) {
             Ticket ticket = optionalTicket.get();
+            if(ticket.getOpenedBy() == user || user.getUserRole().contains(UserRole.ADMIN)) {
+                ticket.setTitle(editTicketRequest.title());
+                ticket.setDescription(editTicketRequest.description());
 
-            ticket.setTitle(editTicketRequest.title());
-            ticket.setDescription(editTicketRequest.description());
-
-            ticketRepository.save(ticket);
-            return TicketDto.of(ticket);
+                ticketRepository.save(ticket);
+                return TicketDto.of(ticket);
+            } else throw new PermisonDeniedException();
         } else
             throw new TicketNotFoundException();
     }
 
     public void deleteTicket(String id) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> findUser = userRepository.buscarPorEmail(userDetails.getUsername());
+        User user = findUser.get();
         Optional<Ticket> ticket = ticketRepository.findFirstById(UUID.fromString(id));
         if(ticket.isPresent())
-            ticketRepository.delete(ticket.orElse(null));
+            if(ticket.get().getOpenedBy() == user || user.getUserRole().contains(UserRole.ADMIN)) {
+                ticketRepository.delete(ticket.orElse(null));
+            } else throw new PermisonDeniedException();
         else
             throw new TicketNotFoundException();
     }
