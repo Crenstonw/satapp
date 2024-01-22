@@ -50,7 +50,6 @@ public class TicketController {
             throw new EmptyListException();
         else
             return ResponseEntity.ok().body(result);
-
     }
 
     @GetMapping("/ticket/inventariable/{inventariableId}")
